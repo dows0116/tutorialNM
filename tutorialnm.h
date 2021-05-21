@@ -14,6 +14,7 @@ Description      : myNM.h
 
 #include "myMatrix.h"
 // Modify newton 
+extern void gradient(double x); // example
 extern double newtonRaphsonfunc(double func(const double x), double dfunc(const double x), double x0, double tol); //  newtonRaphson method 함수 헤더로 불러오기
 extern double func(const double x);
 extern double dfunc(const double x);
