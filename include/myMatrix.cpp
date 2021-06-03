@@ -15,7 +15,7 @@ Description      : myMatrix.cpp
 void printArr(double x[],const char* _name,int m) {
 	printf("%s =\n", _name);
 	for (int i = 0; i < m; i++)
-		printf("%15.6f\n", x[i]);
+		printf("   X[%3d] : %11.6f\n",i, x[i]);
 
 	return;
 }

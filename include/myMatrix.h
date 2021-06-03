@@ -15,7 +15,8 @@ Description      : myMatrix.h
 #include <iostream>
 #include <string>
 #include <fstream>
-
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 typedef struct { 
 	double** at;

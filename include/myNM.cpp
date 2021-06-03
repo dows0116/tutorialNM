@@ -11,6 +11,46 @@ Description      : myNM.cpp
 
 #include "myNM.h"
 
+double func(const double x, const double y) {
+	double tau = 1;
+	double T = 1 / tau;
+	double f = 10;
+	double Vm = 1;
+	double w = 2 * M_PI * f;
+	double dvdt = -1*T * y + T * Vm * cos(w * x);
+	return dvdt;
+}
+
+
+void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, int method) {
+	int m = (tf - t0) / h;
+	double xt = t0;
+	y[0] = 0;
+	double slope1 = 0;
+	double slope2 = 0;
+	double yE = 0;
+	double py = 0;
+	if (method == Eu) { 	//Euler
+		for (int i = 0; i < m - 1; i++) {
+			xt = xt + h;
+			y[i + 1] = y[i] + func(xt, y[i]) * h;
+		}
+	}
+	else if (method == Em) { 	//Modified Euler 
+		for (int i = 0; i < m - 1; i++) {
+			slope1 = func(xt, y[i]); // 현재 값인 x[i]와 y[i]로 slope1 값을 구하면서 yE[i+1]를 구한다.
+			yE = y[i] + func(xt, y[i]) * h;
+			xt = xt + h; // i+1값 
+			slope2 = func(xt, yE); // 기존 오일러로 구한 yE[i+1] 로 구한 slope 2값
+			y[i + 1] = y[i] + (slope1 + slope2) * h / 2;
+		}
+	}
+
+	return;
+
+}
+
+
 double func(const double x) // f(x) 수식 값 입력
 {
 	return x*x*x;
