@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
 	/*					Apply your numerical method algorithm					*/
 	/*==========================================================================*/
 
-	ode(func, yEu, t0, tf, h, Eu);
-	ode(func, yEm, t0, tf, h, Em);
+	ode(func, yEu, t0, tf, h,0, Eu);
+	ode(func, yEm, t0, tf, h, 0,Em);
 	/*==========================================================================*/
 	/*							  Print your results							*/
 	/*==========================================================================*/

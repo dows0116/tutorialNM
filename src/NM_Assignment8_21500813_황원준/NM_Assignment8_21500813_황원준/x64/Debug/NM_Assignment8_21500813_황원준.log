@@ -1,8 +1,10 @@
 ﻿  myMatrix.cpp
   myNM.cpp
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(26,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(563,24): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(36,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(82,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(174,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(855,24): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Assignment_ODE.cpp
   코드를 생성하고 있습니다...
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(399): warning C4715: 'norm': 모든 제어 경로에서 값을 반환하지는 않습니다.
-  NM_Assignment8_21500813_황원준.vcxproj -> C:\Users\82104\Documents\GitHub\tutorialNM\src\NM_Assignment8_21500813_황원준\x64\Debug\NM_Assignment8_21500813_황원준.exe
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(691): warning C4715: 'norm': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  NM_Assignment8_21500813_황원준.vcxproj -> C:\Users\82104\Documents\GitHub\21500813\src\NM_Assignment8_21500813_황원준\x64\Debug\NM_Assignment8_21500813_황원준.exe

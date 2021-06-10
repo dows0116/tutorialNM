@@ -22,6 +22,10 @@ Description      : myNM.h
 #define PI 3.14159265368979323846264338327950288412
 
 
+extern void sys2RK2(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init);
+extern void sys2RK4(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init);
+extern void odeFunc_mck(const double t, const double Y[], double dYdt[]);
+
 extern double odeFunc_rc(const double t, const double v);
 //ode method = 0 : Euler,   1 : Modified Euler
 extern void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, double y0, int method);
@@ -29,6 +33,14 @@ extern void ode(double func(const double x, const double y), double y[], double 
 // add parameter y function
 extern double func(const double x, const double y);
 
+// integral trap
+extern double trapz(double x[], double y[], int m);
+
+// simpson 13
+extern double integral(double func(const double x), double a, double b, int n);
+
+// rectangular
+extern double IntegrateRect(double _x[], double _y[], int _m);
 
 // Modify newton 
 extern double newtonRaphsonfunc(double func(const double x), double dfunc(const double x), double x0, double tol); //  newtonRaphson method 함수 헤더로 불러오기
@@ -47,6 +59,9 @@ extern Matrix	gradient(Matrix _x, Matrix _y);
 // Linear interpolation 
 extern Matrix linearInterp(Matrix x, Matrix y, Matrix xq);
 
+
+// totalerror and residure
+extern double totalerror(Matrix x, Matrix y, Matrix z);
 //Find value Fx for T at Linear interpolation
 double FindValueLIP(Matrix yq, Matrix Tq, double T);
 // Curvefitting

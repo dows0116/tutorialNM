@@ -1,10 +1,10 @@
 ﻿  myMatrix.cpp
   myNM.cpp
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(38,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(66,9): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(94,9): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(641,24): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(38,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(66,9): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(94,9): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(641,24): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Assignment_CF_IP.cpp
   코드를 생성하고 있습니다...
-C:\Users\82104\Documents\GitHub\tutorialNM\include\myNM.cpp(477): warning C4715: 'norm': 모든 제어 경로에서 값을 반환하지는 않습니다.
-  NM_Assignment5_21500813_황원준.vcxproj -> C:\Users\82104\Documents\GitHub\tutorialNM\src\NM_Assignment5_21500813_황원준\Debug\NM_Assignment5_21500813_황원준.exe
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(477): warning C4715: 'norm': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  NM_Assignment5_21500813_황원준.vcxproj -> C:\Users\82104\Documents\GitHub\21500813\src\NM_Assignment5_21500813_황원준\Debug\NM_Assignment5_21500813_황원준.exe

@@ -11,6 +11,143 @@ Description      : myNM.cpp
 
 #include "myNM.h"
 
+void odeFunc_mck(const double t, const double Y[], double dYdt[])
+{
+	double m = 1;
+	double c = 7;
+	double k = 6.9;
+	double f = 5;
+
+	double Fin = 2 * cos(2 * PI * f * t);
+
+	dYdt[0] = Y[1];
+	// Y[0]==y(t)
+	// EXERCISE: MODIFY HERE
+	// HINT;   zdot= (-k*Y - c*Z + Fin)/m;
+
+
+	dYdt[1] = (-k * Y[0] - c * Y[1] + Fin) / m;
+}
+
+
+
+void sys2RK2(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init)
+{
+	int N = (tf - t0) / h + 1;
+	double ti = t0;
+
+	double K1[2] = { 0 }; //K1* [K1_y1
+	double K2[2] = { 0 };
+	double Yin[2] = { 0 };
+	double K1_y1 = 0, K1_y2 = 0, K2_y1 = 0, K2_y2 = 0;
+
+	// Y[0]==y(t)
+	// Y[1]==z(t)
+	// dYdt[0]=z(t)=Y[1]./
+	// dYdt[1]=zdot
+	// Initial condition
+	y1[0] = y1_init;   //y(t)
+	y2[0] = y2_init;  // z(t)=dydt(t)
+
+	for (int i = 0; i < N - 1; i++) {
+		// Slope 1 : K1                            
+		Yin[0] = y1[i];		// z
+		Yin[1] = y2[i];		// dzdt		
+		odeFunc_sys2(ti, Yin, K1);
+		K1_y1 = K1[0];
+		K1_y2 = K1[1];
+
+		// Slope 2 : K2
+		// ADD CODE HERE
+		Yin[0] = y1[i] + K1_y1 * h;		// z
+		Yin[1] = y2[i] + K1_y2 * h;		// dzdt		
+		odeFunc_sys2(ti + h, Yin, K2);
+		K2_y1 = K2[0];
+		K2_y2 = K2[1];
+
+		// Update
+		y1[i + 1] = y1[i] + (K1_y1 + K2_y1) * 0.5 * h;
+		y2[i + 1] = y2[i] + (K1_y2 + K2_y2) * 0.5 * h;
+		ti += h;
+	}
+}
+
+
+// Classical RK4
+void sys2RK4(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init)
+{
+
+	// EXERCISE
+
+	int N = (tf - t0) / h + 1;
+	double ti = t0;
+
+	double K1[2] = { 0 }; //K1* [K1_y1
+	double K2[2] = { 0 };
+	double K3[2] = { 0 };
+	double K4[2] = { 0 };
+	double Yin[2] = { 0 };
+	double K1_y1 = 0, K1_y2 = 0, K2_y1 = 0, K2_y2 = 0, K3_y1 = 0, K3_y2 = 0, K4_y1 = 0, K4_y2 = 0;
+
+	// Y[0]==y(t)
+	// Y[1]==z(t)
+	// dYdt[0]=z(t)=Y[1]
+	// dYdt[1]=zdot
+	// Initial condition
+	y1[0] = y1_init;   //y(t)
+	y2[0] = y2_init;  // z(t)=dydt(t)
+
+	for (int i = 0; i < N - 1; i++) {
+
+		// Slope 1 : K1
+		Yin[0] = y1[i];		// z
+		Yin[1] = y2[i];		// dzdt		
+		odeFunc_sys2(ti, Yin, K1);
+		K1_y1 = K1[0];
+		K1_y2 = K1[1];
+
+		// Slope 2 : K2
+		// ADD CODE HERE
+		Yin[0] = y1[i] + 0.5 * K1_y1 * h;		// z
+		Yin[1] = y2[i] + 0.5 * K1_y2 * h;		// dzdt		
+		odeFunc_sys2(ti + 0.5 * h, Yin, K2);
+		K2_y1 = K2[0];
+		K2_y2 = K2[1];
+
+		// Slope 3 : K3
+
+		Yin[0] = y1[i] + 0.5 * K2_y1 * h;		// z
+		Yin[1] = y2[i] + 0.5 * K2_y2 * h;		// dzdt		
+		odeFunc_sys2(ti + 0.5 * h, Yin, K3);
+		K3_y1 = K3[0];
+		K3_y2 = K3[1];
+
+		// Slope 4 : K4
+
+		Yin[0] = y1[i] + K3_y1 * h;		// z
+		Yin[1] = y2[i] + K3_y2 * h;		// dzdt		
+		odeFunc_sys2(ti + h, Yin, K4);
+		K4_y1 = K4[0];
+		K4_y2 = K4[1];
+
+
+
+
+
+		// Update
+		y1[i + 1] = y1[i] + (K1_y1 + 2 * K2_y1 + 2 * K3_y1 + K4_y1) / 6 * h;
+		y2[i + 1] = y2[i] + (K1_y2 + 2 * K2_y2 + 2 * K3_y2 + K4_y2) / 6 * h;
+		ti += h;
+	}
+
+
+}
+
+
+
+
+
+
 double odeFunc_rc(const double t, const double v) {
 
 	double tau = 1;
@@ -33,9 +170,8 @@ double func(const double x, const double y) {
 	return dvdt;
 }
 
-
 void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, double y0 , int method) {
-	int m = (tf - t0) / h;
+	int N = (tf - t0) / h+1;
 	double xt = t0;
 	y[0] = 0;
 	double slope1 = 0;
@@ -43,18 +179,18 @@ void ode(double func(const double x, const double y), double y[], double t0, dou
 	double yE = 0;
 	double py = 0;
 	if (method == Eu) { 	//Euler
-		for (int i = 0; i < m - 1; i++) {
-			xt = xt + h;
+		for (int i = 0; i < N - 1; i++) {
 			y[i + 1] = y[i] + func(xt, y[i]) * h;
+			xt = xt + h;
 		}
 	}
 	else if (method == Em) { 	//Modified Euler 
-		for (int i = 0; i < m - 1; i++) {
+		for (int i = 0; i < N - 1; i++) {
 			slope1 = func(xt, y[i]); // 현재 값인 x[i]와 y[i]로 slope1 값을 구하면서 yE[i+1]를 구한다.
-			yE = y[i] + func(xt, y[i]) * h;
-			xt = xt + h; // i+1값 
-			slope2 = func(xt, yE); // 기존 오일러로 구한 yE[i+1] 로 구한 slope 2값
+			yE = y[i] + slope1 * h;
+			slope2 = func(xt+h, yE); // 기존 오일러로 구한 yE[i+1] 로 구한 slope 2값
 			y[i + 1] = y[i] + (slope1 + slope2) * h / 2;
+			xt = xt + h; // i+1값 
 		}
 	}
 	else if (method == ODE_RK2) {
@@ -62,10 +198,6 @@ void ode(double func(const double x, const double y), double y[], double t0, dou
 		double C2 = 0.5;
 		double alpha = 1;
 		double beta = alpha;  // alpha=beta
-
-		int N = (tf - t0) / h + 1;
-		double ti = t0;
-		double y_EU;
 		double K1 = 0, K2 = 0;
 
 		// Initialization 
@@ -75,25 +207,21 @@ void ode(double func(const double x, const double y), double y[], double t0, dou
 		{
 			// First slope  
 			// K1=?
-			K1 = odeFunc_rc(ti, y[i]);
+			K1 = func(xt, y[i]);
 
 			// Second slope  
 			// K2=? 
-			y_EU = y[i] + beta * K1 * h;
-			K2 = odeFunc_rc(ti + alpha * h, y_EU);
+			yE = y[i] + beta * K1 * h;
+			K2 = func(xt + alpha * h, yE);
 
 			// Update 
 			y[i + 1] = y[i] + (C1 * K1 + C2 * K2) * h;
-			ti += h;
+			xt += h;
 		}
 	}
 	else if (method == ODE_RK4) {
 
 		double a = 0.5;
-
-		int N = (tf - t0) / h + 1;
-		double ti = t0;
-		double y_EU;
 		double K1 = 0, K2 = 0, K3 = 0, K4 = 0;
 
 		// Initialization 
@@ -103,21 +231,21 @@ void ode(double func(const double x, const double y), double y[], double t0, dou
 		{
 			// First slope  
 			// K1=?
-			K1 = odeFunc_rc(ti, y[i]);
+			K1 = func(xt, y[i]);
 
 			// Second slope  
 			// K2=? 
-			y_EU = y[i] + a * K1 *h ;
-			K2 = odeFunc_rc(ti+a*h, y_EU);
+			yE = y[i] + a * K1 *h ;
+			K2 = func(xt+a*h, yE);
 
-			y_EU = y[i] + a * K2 * h;
-			K3 = odeFunc_rc(ti + a * h, y_EU);
+			yE = y[i] + a * K2 * h;
+			K3 = func(xt + a * h, yE);
 
-			y_EU = y[i] + a * K3 * h;
-			K4 = odeFunc_rc(ti + h, y_EU);
+			yE = y[i] + K3 * h;
+			K4 = func(xt + h, yE);
 			// Update 
 			y[i + 1] = y[i] + (K1 * 2*K2 + 2*K3 * K4) * h/6;
-			ti += h;
+			xt += h;
 		}
 	}
 
@@ -127,6 +255,75 @@ void ode(double func(const double x, const double y), double y[], double t0, dou
 	return;
 
 }
+
+
+double integral(double func(const double x), double a, double b, int n) {
+
+	double h = (b - a) / n;
+	double I = 0;
+	double sum = 0;
+	I = func(a) + func(b);
+	double Iod = 0;
+	double Iev = 0;
+
+	for (int i = 1; i < n; i += 2)
+		Iod += func(a + h * i);
+
+	for (int i = 2; i < n; i += 2)
+		Iev += func(a + h * i);
+
+	Iod = 4 * Iod;
+	Iev = 2 * Iev;
+	sum = (I + Iod + Iev) / 3 * h;
+
+
+	return sum;
+
+}
+
+double integral38(double func(const double x), double a, double b, int n) {
+
+	double h = (b - a) / n;
+	double I = 0;
+	double sum = 0;
+	I = func(a) + func(b);
+	double Iod = 0;
+	double Iev = 0;
+
+	for (int i = 1; i < n; i += 3)
+		Iod += func(a + h * i)+ func(a + h * i+1);
+
+	for (int i = 2; i < n; i += 3)
+		Iev += func(a + h * i);
+
+	Iod = 3 * Iod;
+	Iev = 2 * Iev;
+	sum = (I + Iod + Iev) / 8 * h * 3;
+
+
+	return sum;
+
+}
+
+double IntegrateRect(double _x[], double _y[], int _m) {
+	int N = _m - 1;
+	double I = 0;
+	for (int i = 0; i < N; i++)
+		I += _y[i] * (_x[i + 1] - _x[i]);
+
+	return I;
+}
+
+
+double trapz(double x[], double y[], int m) {
+	int N = m - 1;
+	double I = 0;
+	for (int i = 0; i < N; i++)
+		I += (y[i] + y[i + 1]) * (x[i + 1] - x[i]);
+	I = I / 2;
+	return I;
+}
+
 
 
 double func(const double x) // f(x) 수식 값 입력
@@ -298,7 +495,24 @@ double FindValueLCF(Matrix z, double T) { // 커브 피팅에서 원하는 입력값 T의 추�
 
 	return Fx;
 }
-
+double totalerror(Matrix x, Matrix y,Matrix z) {
+	int mx = x.rows;
+	int my = y.rows;
+	double E = 0;
+	Matrix rk = createMat(x.rows, 1);
+		if (mx != my) { //오류 출력
+			printf("Error!! : 입력값의 길이가 맞지 않음 을 실행 시킬 수 없음.");
+			E = 0;
+		}
+		else {
+			for (int i = 0; i < mx; i++) {
+				rk.at[i][0] = y.at[i][0] - (z.at[1][0] * x.at[i][0] + z.at[0][0]);
+				E += rk.at[i][0]* rk.at[i][0];
+			}
+		}
+	
+	return E;
+}
 Matrix	linearFit(Matrix _x, Matrix _y) { // 리니어 커브 피팅 함수
 	int mx = _x.rows;
 	int my = _y.rows;

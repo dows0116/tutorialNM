@@ -14,32 +14,7 @@ Description      : [Tutorial]ODE_IVP_student.c
 #include <stdio.h>
 #include <math.h>
 
-//#define ODE_EU 0
-//#define ODE_EM 1
-//#define ODE_RK2 2
-//#define ODE_RK4 3
-//
-////  PI is defined in  myNM.h
-//#define PI 3.14159265368979323846264338327950288412
-//
-//// Problem1: Single equation of 1st order ODE
-//double odeFunc_rc(const double t, const double v);
-//
-// Problem2: Single equation of 2nd order ODE
-void odeFunc_mck(const double t, const double Y[], double dYdt[]);
 
-
-// Single Equation : odeEM, odeEU
-//void odeEU(double odeFunc(const double t, const double y), double y[], double t0, double tf, double h, double y0);
-//void odeEM(double odeFunc(const double t, const double y), double y[], double t0, double tf, double h, double y0);
-//void odeRK2(double odeFunc(const double t, const double y), double y[], double t0, double tf, double h, double y0);
-//void odeRK4(double odeFunc(const double t, const double y), double y[], double t0, double tf, double h, double y0);
-
-// 2nd order Equations : sys2RK2, sys2RK4
-void sys2RK2(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init);
-void sys2RK4(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init);
-
-// solvor ¸¸µé±â 
 
 
 int main(int argc, char* argv[])
@@ -63,10 +38,10 @@ int main(int argc, char* argv[])
 	double v0 = 0;
 
 	// ODE solver
-	ode(odeFunc_rc, y_EU, a, b, h, v0,Eu);
-	ode(odeFunc_rc, y_EM, a, b, h, v0,Em);
-	ode(odeFunc_rc, y_RK2, a, b, h, v0,ODE_RK2);
-	ode(odeFunc_rc, y_RK4, a, b, h, v0, ODE_RK4);
+	ode(func, y_EU, a, b, h, v0,Eu);
+	ode(func, y_EM, a, b, h, v0,Em);
+	ode(func, y_RK2, a, b, h, v0,ODE_RK2);
+	ode(func, y_RK4, a, b, h, v0, ODE_RK4);
 	//odeEU(odeFunc_rc, y_EU, a, b, h, v0);
 	//odeEM(odeFunc_rc, y_EM, a, b, h, v0);
 
@@ -112,7 +87,7 @@ int main(int argc, char* argv[])
 
 	///////////////////////////////////////////////////////////////
 	// Exercise 3: Create the standard form  for RK4 for 2nd order	
-	//sys2RK4(odeFunc_mck, y, v, t0, tf, h, y0, v0);
+
 	   
 
 
@@ -125,7 +100,15 @@ int main(int argc, char* argv[])
 		printf("t= %f\ty= %f\tv= %f\n", t0 + i * h, y[i], v[i]);
 	printf("\n\n");
 
-		
+	sys2RK4(odeFunc_mck, y, v, t0, tf, h, y0, v0);
+	printf("/*---------------------------*/\n");
+	printf("/ 2nd Order ODE : RK4 /\n");
+	printf("/*---------------------------*/\n");
+	printf(" - Total number of data N=%d \n", N);
+	for (int i = 0; i < N; i++)
+		printf("t= %f\ty= %f\tv= %f\n", t0 + i * h, y[i], v[i]);
+	printf("\n\n");
+
 	// Copy and paste the output in MATLAB and PLOT
 	for (int i = 0; i < N; i++)
 		printf("%f\t%f\t%f\n", t0 + i * h, y[i], v[i]);
@@ -148,23 +131,6 @@ int main(int argc, char* argv[])
 //}
 //
 
-void odeFunc_mck(const double t, const double Y[], double dYdt[])
-{
-	double m = 1;
-	double c = 7;
-	double k = 6.9;
-	double f = 5;
-
-	double Fin = 2 * cos(2 * PI * f * t);
-
-	dYdt[0] = Y[1];	
-	// Y[0]==y(t)
-	// EXERCISE: MODIFY HERE
-	// HINT;   zdot= (-k*Y - c*Z + Fin)/m;
-
-
-	dYdt[1] = (-k * Y[0] - c * Y[1] + Fin) / m;
-}
 
 
 
@@ -223,94 +189,3 @@ void odeFunc_mck(const double t, const double Y[], double dYdt[])
 ///*---------------------------------------------------------------------------------------------------------------------------*/
 //
 // ODE RK2:  one of 2nd order ODE <--> two of 1st order ODE
-void sys2RK2(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init)
-{
-	int N = (tf - t0) / h + 1;
-	double ti = t0;
-
-	double K1[2] = { 0 }; //K1* [K1_y1
-	double K2[2] = { 0 };
-	double Yin[2] = { 0 };
-	double K1_y1=0, K1_y2=0, K2_y1=0, K2_y2=0;
-
-	// Y[0]==y(t)
-	// Y[1]==z(t)
-	// dYdt[0]=z(t)=Y[1]
-	// dYdt[1]=zdot
-	// Initial condition
-	y1[0] = y1_init;   //y(t)
-	y2[0] = y2_init;  // z(t)=dydt(t)
-
-	for (int i = 0; i < N - 1; i++) {
-		
-		// Slope 1 : K1
-		Yin[0] = y1[i];		// z
-		Yin[1] = y2[i];		// dzdt		
-		odeFunc_sys2(ti, Yin, K1);
-		K1_y1 = K1[0];
-		K1_y2 = K1[1];
-
-		// Slope 2 : K2
-		// ADD CODE HERE
-		Yin[0] = y1[i]+K1_y1*h;		// z
-		Yin[1] = y2[i]+ K1_y2*h;		// dzdt		
-		odeFunc_sys2(ti+h, Yin, K2);
-		K1_y1 = K1[0];
-		K1_y2 = K1[1];
-
-		// Update
-		y1[i + 1] = y1[i] + (K1_y1 + K2_y1) * 0.5 * h;		
-		y2[i + 1] = y2[i] + (K1_y2 + K2_y2) * 0.5 * h;
-		ti += h;
-	}
-}
-
-
-// Classical RK4
-void sys2RK4(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init)
-{
-
-	// EXERCISE
-
-	int N = (tf - t0) / h + 1;
-	double ti = t0;
-
-	double K1[2] = { 0 }; //K1* [K1_y1
-	double K2[2] = { 0 };
-	double Yin[2] = { 0 };
-	double K1_y1 = 0, K1_y2 = 0, K2_y1 = 0, K2_y2 = 0;
-
-	// Y[0]==y(t)
-	// Y[1]==z(t)
-	// dYdt[0]=z(t)=Y[1]
-	// dYdt[1]=zdot
-	// Initial condition
-	y1[0] = y1_init;   //y(t)
-	y2[0] = y2_init;  // z(t)=dydt(t)
-
-	for (int i = 0; i < N - 1; i++) {
-
-		// Slope 1 : K1
-		Yin[0] = y1[i];		// z
-		Yin[1] = y2[i];		// dzdt		
-		odeFunc_sys2(ti, Yin, K1);
-		K1_y1 = K1[0];
-		K1_y2 = K1[1];
-
-		// Slope 2 : K2
-		// ADD CODE HERE
-		Yin[0] = y1[i] + K1_y1 * h;		// z
-		Yin[1] = y2[i] + K1_y2 * h;		// dzdt		
-		odeFunc_sys2(ti + h, Yin, K2);
-		K1_y1 = K1[0];
-		K1_y2 = K1[1];
-
-		// Update
-		y1[i + 1] = y1[i] + (K1_y1 + K2_y1) * 0.5 * h;
-		y2[i + 1] = y2[i] + (K1_y2 + K2_y2) * 0.5 * h;
-		ti += h;
-	}
-
-
-}
-

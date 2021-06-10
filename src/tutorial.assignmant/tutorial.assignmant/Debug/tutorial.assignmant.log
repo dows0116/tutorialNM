@@ -1,8 +1,15 @@
-﻿  [Tutorial]ODE_IVP_Student.cpp
-C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(54,17): warning C4244: '초기화 중': 'double'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(86,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(100,20): warning C4244: '=': 'double'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(122,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(128,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(226,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  tutorial.assignmant.vcxproj -> C:\Users\82104\Documents\GitHub\tutorialNM\src\tutorial.assignmant\Debug\tutorial.assignmant.exe
+﻿  myNM.cpp
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(36,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(82,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(174,8): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(855,24): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  [Tutorial]ODE_IVP_Student.cpp
+C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(31,17): warning C4244: '초기화 중': 'double'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(63,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(77,20): warning C4244: '=': 'double'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(99,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(108,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\[Tutorial]ODE_IVP_Student.cpp(113,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  코드를 생성하고 있습니다...
+C:\Users\82104\Documents\GitHub\21500813\include\myNM.cpp(691): warning C4715: 'norm': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  tutorial.assignmant.vcxproj -> C:\Users\82104\Documents\GitHub\21500813\src\tutorial.assignmant\Debug\tutorial.assignmant.exe
