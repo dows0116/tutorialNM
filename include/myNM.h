@@ -15,10 +15,16 @@ Description      : myNM.h
 #include "myMatrix.h"
 #define Eu 0
 #define Em 1
+#define ODE_EU 0
+#define ODE_EM 1
+#define ODE_RK2 2
+#define ODE_RK4 3
+#define PI 3.14159265368979323846264338327950288412
 
 
+extern double odeFunc_rc(const double t, const double v);
 //ode method = 0 : Euler,   1 : Modified Euler
-extern void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, int method);
+extern void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, double y0, int method);
 
 // add parameter y function
 extern double func(const double x, const double y);

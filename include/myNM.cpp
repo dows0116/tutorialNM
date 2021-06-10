@@ -11,6 +11,18 @@ Description      : myNM.cpp
 
 #include "myNM.h"
 
+double odeFunc_rc(const double t, const double v) {
+
+	double tau = 1;
+	double T = 1 / tau;
+	double f = 10;
+	double Vm = 1;
+	double omega = 2 * PI * f;
+
+	return  -T * v + T * Vm * cos(omega * t);
+}
+
+
 double func(const double x, const double y) {
 	double tau = 1;
 	double T = 1 / tau;
@@ -22,7 +34,7 @@ double func(const double x, const double y) {
 }
 
 
-void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, int method) {
+void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, double y0 , int method) {
 	int m = (tf - t0) / h;
 	double xt = t0;
 	y[0] = 0;
@@ -45,6 +57,72 @@ void ode(double func(const double x, const double y), double y[], double t0, dou
 			y[i + 1] = y[i] + (slope1 + slope2) * h / 2;
 		}
 	}
+	else if (method == ODE_RK2) {
+		double C1 = 0.5;
+		double C2 = 0.5;
+		double alpha = 1;
+		double beta = alpha;  // alpha=beta
+
+		int N = (tf - t0) / h + 1;
+		double ti = t0;
+		double y_EU;
+		double K1 = 0, K2 = 0;
+
+		// Initialization 
+		y[0] = y0;
+
+		for (int i = 0; i < N - 1; i++)
+		{
+			// First slope  
+			// K1=?
+			K1 = odeFunc_rc(ti, y[i]);
+
+			// Second slope  
+			// K2=? 
+			y_EU = y[i] + beta * K1 * h;
+			K2 = odeFunc_rc(ti + alpha * h, y_EU);
+
+			// Update 
+			y[i + 1] = y[i] + (C1 * K1 + C2 * K2) * h;
+			ti += h;
+		}
+	}
+	else if (method == ODE_RK4) {
+
+		double a = 0.5;
+
+		int N = (tf - t0) / h + 1;
+		double ti = t0;
+		double y_EU;
+		double K1 = 0, K2 = 0, K3 = 0, K4 = 0;
+
+		// Initialization 
+		y[0] = y0;
+
+		for (int i = 0; i < N - 1; i++)
+		{
+			// First slope  
+			// K1=?
+			K1 = odeFunc_rc(ti, y[i]);
+
+			// Second slope  
+			// K2=? 
+			y_EU = y[i] + a * K1 *h ;
+			K2 = odeFunc_rc(ti+a*h, y_EU);
+
+			y_EU = y[i] + a * K2 * h;
+			K3 = odeFunc_rc(ti + a * h, y_EU);
+
+			y_EU = y[i] + a * K3 * h;
+			K4 = odeFunc_rc(ti + h, y_EU);
+			// Update 
+			y[i + 1] = y[i] + (K1 * 2*K2 + 2*K3 * K4) * h/6;
+			ti += h;
+		}
+	}
+
+
+
 
 	return;
 
