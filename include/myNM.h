@@ -13,14 +13,16 @@ Description      : myNM.h
 #define		_MY_NM_H
 
 #include "myMatrix.h"
-#define Eu 0
-#define Em 1
 #define ODE_EU 0
 #define ODE_EM 1
 #define ODE_RK2 2
 #define ODE_RK4 3
 #define PI 3.14159265368979323846264338327950288412
-
+extern double Func_q4(const double t, const double y);
+extern void odePC(double Func_q4(const double x, const double y), double Ypc[], double t0, double tf, double h, double y0);
+extern double integral13(double y[], double a, double b, int n);
+extern void odeFunc_Q3(const double t, const double Y[], double dYdt[]);
+extern double FindValueLCFX(Matrix z, double R);
 
 extern void sys2RK2(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init);
 extern void sys2RK4(void odeFunc_sys2(const double t, const double Y[], double dYdt[]), double y1[], double y2[], double t0, double tf, double h, double y1_init, double y2_init);

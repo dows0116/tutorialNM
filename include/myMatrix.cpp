@@ -11,6 +11,14 @@ Description      : myMatrix.cpp
 
 #include "myMatrix.h"
 
+void printArr2(double x[],double y[], const char* _name, int m) {
+	printf("%s =\n", _name);
+	for (int i = 0; i < m; i++)
+		printf("   X[%3d] : %11.6f\n     Y[%3d] : %11.6f\n",  i, x[i],i, y[i]);
+
+	return;
+}
+
 
 void printArr(double x[],const char* _name,int m) {
 	printf("%s =\n", _name);

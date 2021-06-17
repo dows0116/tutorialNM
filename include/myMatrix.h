@@ -23,8 +23,10 @@ typedef struct {
 	int rows, cols;
 }Matrix;
 
+
+extern void printArr2(double x[], double y[], const char* _name, int m);
 // Print Array
-void printArr(double x[], const char* _name,int m);
+extern void printArr(double x[], const char* _name,int m);
 
 // Create a matrix from 1D-array
 extern Matrix arr2Mat(double* _1Darray, int _rows, int _cols);

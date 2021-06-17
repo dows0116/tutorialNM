@@ -11,6 +11,92 @@ Description      : myNM.cpp
 
 #include "myNM.h"
 
+double Func_q4(const double t, const double y) {
+
+
+	double et = 7 * exp(-0.3 * t);
+	double dydt = -1.2 * y + et;
+
+	return  dydt;
+}
+
+
+void odePC(double Func_q4(const double x, const double y), double Ypc[],double t0, double tf, double h, double y0) {
+	int N = (tf - t0) / h + 1;
+	double xt = t0;
+	Ypc[0] = y0;
+	double slope1 = 0;
+	double slope2 = 0;
+	double yE = 0;
+	double py = 0;
+	double E = 0;
+	double error;
+	slope1 = func(xt, Ypc[0]);
+	yE = Ypc[0] + slope1 * h;
+	slope2 = Func_q4(xt + h, yE); 
+	Ypc[1] = Ypc[0] + (slope1 + slope2) * h / 2;
+	double yk0 = 0;
+	double yk1= 0;
+		for (int i = 0; i < N - 1; i++) {
+			yk0 = Ypc[i];
+			E = 0;
+			slope1 = Func_q4(xt, Ypc[i]);
+			for (int k = 0; E != 1; k++) {
+
+				slope2 = Func_q4(xt + h, yk0);
+				yk1 = Ypc[i] + (slope1 + slope2) * h / 2;
+				error = (yk1 - yk0) / yk0;
+				if (abs(error) <= 0.00001)
+					E = 1;
+				yk0 = yk1;
+			}
+			Ypc[i + 1] = yk1;
+			xt = xt + h; // i+1값 
+	}
+
+}
+
+double integral13(double y[],double a,double b,int n) {
+	double h = (b - a) / n;
+	double I = 0;
+	double sum = 0;
+	I = y[0] + y[n-1];
+	double Iod = 0;
+	double Iev = 0;
+
+	for (int i = 1; i < n; i += 2)
+		Iod += y[i];
+
+	for (int i = 2; i < n; i += 2)
+		Iev += y[i];
+
+	Iod = 4 * Iod;
+	Iev = 2 * Iev;
+	sum = (I + Iod + Iev) / 3 * h;
+
+
+	return sum;
+
+}
+
+
+
+
+void odeFunc_Q3(const double t, const double Y[], double dYdt[])
+{
+	double m = 0.5;
+	double c = 0.16;
+	double L = 1.2;
+	double g = 9.81;
+
+	double Fin = m * g * sin(Y[0]);
+
+	dYdt[0] = Y[1];
+
+	dYdt[1] = (-c*L * Y[1]  - Fin) /( m*L);
+}
+
+
 void odeFunc_mck(const double t, const double Y[], double dYdt[])
 {
 	double m = 1;
@@ -173,18 +259,18 @@ double func(const double x, const double y) {
 void ode(double func(const double x, const double y), double y[], double t0, double tf, double h, double y0 , int method) {
 	int N = (tf - t0) / h+1;
 	double xt = t0;
-	y[0] = 0;
+	y[0] = y0;
 	double slope1 = 0;
 	double slope2 = 0;
 	double yE = 0;
 	double py = 0;
-	if (method == Eu) { 	//Euler
+	if (method == ODE_EU) { 	//Euler
 		for (int i = 0; i < N - 1; i++) {
 			y[i + 1] = y[i] + func(xt, y[i]) * h;
 			xt = xt + h;
 		}
 	}
-	else if (method == Em) { 	//Modified Euler 
+	else if (method == ODE_EM) { 	//Modified Euler 
 		for (int i = 0; i < N - 1; i++) {
 			slope1 = func(xt, y[i]); // 현재 값인 x[i]와 y[i]로 slope1 값을 구하면서 yE[i+1]를 구한다.
 			yE = y[i] + slope1 * h;
@@ -370,6 +456,7 @@ double newtonRaphsonfunc(double func(const double x), double dfunc(const double 
 
 
 
+
 void  gradient(double x[], double y[], double dydx[], int m) {
 	double h = x[1] - x[0];
 	if ( m < 2) { //  2보다 작아 함수를 잘 실행시킬수 없음으로 오류 출력
@@ -487,6 +574,12 @@ Matrix linearInterp(Matrix x, Matrix y, Matrix xq) { // 리니어 인터폴레이션 함수
 
 	return yq;
 
+}
+
+double FindValueLCFX(Matrix z, double R) { // 커브 피팅에서 원하는 입력값 T의 추정값을 찾는 함수
+	double T = 0;
+	T = (R - z.at[0][0]) / z.at[1][0];
+	return T;
 }
 
 double FindValueLCF(Matrix z, double T) { // 커브 피팅에서 원하는 입력값 T의 추정값을 찾는 함수
